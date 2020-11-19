@@ -21,6 +21,7 @@ public class Manager : MonoBehaviour
     {
         va = FindObjectOfType<VisualAnimations>();
         va.AnimateSkybox(currentTurn);
+        va.ChangeBloomTexture(currentTurn);
     }
 
     private void OnMouseUp()
@@ -53,6 +54,7 @@ public class Manager : MonoBehaviour
             waiting = false;
 
             va.AnimateSkybox(currentTurn);
+            va.ChangeBloomTexture(currentTurn);
         }
     }
 
