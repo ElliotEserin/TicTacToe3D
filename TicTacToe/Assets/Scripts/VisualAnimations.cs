@@ -5,7 +5,7 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class VisualAnimations : MonoBehaviour
 {
-    public Color cross, naught;
+    public Color startCol, cross, naught;
     public Texture crossSprite, naughtSprite;
     public float defaultIntensity;
     public float defaultBloomIntensity;
@@ -17,6 +17,9 @@ public class VisualAnimations : MonoBehaviour
     {
         volume = GetComponent<PostProcessVolume>();
         volume.profile.TryGetSettings(out bloom);
+
+        bloom.dirtIntensity.value = 0f;
+        RenderSettings.skybox.SetColor("_Tint", startCol);
     }
 
     public void ChangeBloomTexture(bool value)

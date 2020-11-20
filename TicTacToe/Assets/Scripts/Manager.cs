@@ -11,22 +11,35 @@ public class Manager : MonoBehaviour
     [Space(20)]
     [SerializeField] public Node[] nodes;
 
-    bool gameStarted = true;
+    bool gameStarted = false;
     bool gameEnded = false;
     bool waiting = false;
+
+    public bool GameStarted
+    {
+        get
+        {
+            return gameStarted;
+        }
+        set
+        {
+            gameStarted = value;
+
+            va.AnimateSkybox(currentTurn);
+            va.ChangeBloomTexture(currentTurn);
+        }
+    }
 
     VisualAnimations va;
 
     private void Start()
     {
         va = FindObjectOfType<VisualAnimations>();
-        va.AnimateSkybox(currentTurn);
-        va.ChangeBloomTexture(currentTurn);
     }
 
     private void OnMouseUp()
     {
-        if (!gameEnded && waiting == false)
+        if (!gameEnded && gameStarted && waiting == false)
         {
             RaycastHit hit;
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
