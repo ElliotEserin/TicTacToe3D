@@ -9,6 +9,19 @@ public class UIManager : MonoBehaviour
     public Slider friction, bounciness, mass;
     public Rigidbody naught, cross;
 
+    public float defaultFriction, defaultBounciness, defaultMass;
+
+    private void Start()
+    {
+        friction.value = defaultFriction;
+        bounciness.value = defaultBounciness;
+        mass.value = defaultMass;
+
+        physic.dynamicFriction = physic.staticFriction = defaultFriction;
+        physic.bounciness = defaultBounciness;
+        naught.mass = cross.mass = defaultMass;
+    }
+
     public void StartGame()
     {
         FindObjectOfType<Manager>().GameStarted = true;
