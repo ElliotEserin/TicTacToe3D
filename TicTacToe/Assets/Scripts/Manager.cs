@@ -12,7 +12,7 @@ public class Manager : MonoBehaviour
     [SerializeField] public Node[] nodes;
 
     bool gameStarted = false;
-    bool gameEnded = false;
+    public bool gameEnded = false;
     bool waiting = false;
 
     public bool GameStarted
@@ -31,6 +31,10 @@ public class Manager : MonoBehaviour
     }
 
     VisualAnimations va;
+
+    [Header("Particle Effects")]
+    public ParticleSystem crossParticle;
+    public ParticleSystem naughtParticle;
 
     private void Start()
     {
@@ -76,13 +80,11 @@ public class Manager : MonoBehaviour
         var crossWin = CheckLayers("Cross");
         var naughtWin = CheckLayers("Naught");
 
-        if (crossWin)
-            Debug.Log("CROSSES WIN");
-        else if (naughtWin)
-            Debug.Log("NAUGHTs WIN");
-
         if (crossWin || naughtWin)
+        {
             gameEnded = true;
+            FindObjectOfType<UIManager>().DisplayEndScreen(naughtWin);
+        }
     }
 
     bool CheckLayers(string tag)
@@ -145,5 +147,38 @@ public class Manager : MonoBehaviour
         {
             return node.CompareTag(tag);
         }
+    }
+
+    public void ClearBoard()
+    {
+        var cubes1 = GameObject.FindGameObjectsWithTag("Cross");
+        var cubes2 = GameObject.FindGameObjectsWithTag("Naught");
+
+        foreach(GameObject cube in cubes1)
+        {
+            if (cube.GetComponent<Rigidbody>() == null)
+                continue;
+
+            var GO = Instantiate(crossParticle, cube.transform.position, Quaternion.identity);
+            Destroy(cube);
+            Destroy(GO, 10);
+        }
+
+        foreach (GameObject cube in cubes2)
+        {
+            if (cube.GetComponent<Rigidbody>() == null)
+                continue;
+
+            var GO = Instantiate(naughtParticle, cube.transform.position, Quaternion.identity).gameObject;
+            Destroy(cube);
+            Destroy(GO, 5f);
+        }
+
+        foreach(Node node in nodes)
+        {
+            node.tag = "Untagged";
+        }
+
+        waiting = false;
     }
 }
