@@ -8,4 +8,4 @@
 <meta name="msapplication-config" content="https://ellioteserin.github.io/TicTacToe3D/browserconfig.xml">
 <meta name="theme-color" content="#ffffff">
 
-<a href="/TicTacToe Build/index.html">Game</a>
+<a href="/TicTacToe Build/game.html">Game</a>
