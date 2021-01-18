@@ -55,6 +55,7 @@ public class UIManager : MonoBehaviour
     public void DisplayEndScreen(bool winner)
     {
         endScreen.SetActive(true);
+        Destroy(GameObject.Find("Tutorial"));
         winText.SetText(((winner) ? "NAUGHTS" : "CROSSES") + " WIN!");
     }
 
@@ -67,4 +68,8 @@ public class UIManager : MonoBehaviour
         manager.gameEnded = false;
         animator.SetTrigger("Restart");
     }
+
+    public void ExitGame() => Application.Quit();
+
+    public void Refresh() => UnityEngine.SceneManagement.SceneManager.LoadScene(0);
 }
